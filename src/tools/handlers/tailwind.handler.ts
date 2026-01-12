@@ -8,7 +8,6 @@ export function handleTailwind(): ToolResponse {
         text: `✅ Tailwind (Vite + React) comandos típicos
 
 npm install tailwindcss @tailwindcss/vite
-npx tailwindcss init -p
 
   En vite.config.ts
   import tailwindcss from '@tailwindcss/vite'

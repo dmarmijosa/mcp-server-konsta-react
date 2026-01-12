@@ -15,6 +15,8 @@ export class ToolsCallArgumentsDTO {
   @IsString({ each: true })
   @IsOptional()
   packages?: string[];
+  @IsOptional()
+  project?: any;
 }
 
 export class ToolsCallBodyDTO {

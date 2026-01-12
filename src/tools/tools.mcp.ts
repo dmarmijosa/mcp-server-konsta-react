@@ -21,6 +21,21 @@ export const toolsMCP = [
           enum: ['ios', 'material'],
           default: 'ios',
         },
+        project: {
+          type: 'object',
+          properties: {
+            framework: {
+              type: 'string',
+              enum: ['react', 'unknown'],
+              default: 'unknown',
+            },
+            packageJson: {
+              type: 'string',
+              description:
+                'Contenido de package.json (opcional) para validar React',
+            },
+          },
+        },
       },
     },
   },
