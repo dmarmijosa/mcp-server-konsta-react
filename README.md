@@ -25,6 +25,8 @@
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
+MCP (Model Context Protocol) Server para integración con herramientas de IA como VS Code, Claude (Codex), y Google Gemini. Proporciona herramientas para ayudarte a construir aplicaciones con React + Capacitor + Tailwind + Konsta.
+
 ## Project setup
 
 ```bash
@@ -43,6 +45,60 @@ $ npm run start:dev
 # production mode
 $ npm run start:prod
 ```
+
+## MCP Installation Guide
+
+### VS Code
+
+1. Instala la extensión oficial de Model Context Protocol para VS Code
+2. Abre la paleta de comandos (`Cmd+Shift+P` en Mac, `Ctrl+Shift+P` en Linux/Windows)
+3. Busca "MCP: Add Server" y selecciona
+4. En el archivo de configuración, agrega:
+
+```json
+{
+  "mcpServers": {
+    "capacitor-stack": {
+      "url": "http://localhost:3000/mcp"
+    }
+  }
+}
+```
+
+5. Asegúrate de que el servidor está corriendo: `npm run start:dev`
+
+### Claude (Codex)
+
+1. Accede a tu cuenta de Claude
+2. En las configuraciones de Claude, busca "Conexiones externas" o "MCP Servers"
+3. Agrega una nueva conexión con los siguientes detalles:
+   - **URL**: `http://localhost:3000/mcp`
+   - **Nombre**: `capacitor-stack`
+   - **No requiere token de autenticación**
+
+4. Inicia el servidor MCP: `npm run start:dev`
+
+### Google Gemini
+
+1. Accede a [Google AI Studio](https://aistudio.google.com)
+2. En las opciones de configuración, busca "Conexiones MCP"
+3. Agrega una nueva conexión:
+   - **URL**: `http://localhost:3000/mcp`
+   - **Nombre**: `capacitor-stack`
+   - **Autenticación**: No requerida
+
+4. Ejecuta el servidor: `npm run start:dev`
+
+**Nota**: Todas las herramientas utilizan la URL directamente sin necesidad de tokens de autenticación.
+
+## Herramientas disponibles
+
+- `ui.konsta`: Genera snippets de Konsta UI para React
+- `ui.tailwind`: Proporciona instrucciones de instalación de Tailwind
+- `cap.plugins`: Lista plugins de Capacitor según features solicitadas
+- `cap.install`: Genera comandos para instalar y sincronizar Capacitor
+- `stack.recommend`: Recomienda el stack completo (React + Capacitor + Tailwind + Konsta)
+- `cap.verify`: Verifica paquetes contra lista permitida
 
 ## Run tests
 
