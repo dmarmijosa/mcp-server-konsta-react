@@ -3,7 +3,7 @@ version: '3.8'
 services:
   mcp_nestjs_api:
     image: ${DEPLOY_IMAGE}:latest
-    container_name: api_simple_container
+    container_name: mcp_nestjs
     restart: always
     ports:
       - "3001:3000"
