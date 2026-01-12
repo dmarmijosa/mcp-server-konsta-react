@@ -83,16 +83,29 @@ $ npm run start:prod
 
 ## Herramientas disponibles
 
-- `ui.konsta`: Genera snippets de Konsta UI para React
-- `ui.tailwind`: Proporciona instrucciones de instalación de Tailwind
-- `cap.plugins`: Lista plugins de Capacitor según features solicitadas
-- `cap.install`: Genera comandos para instalar y sincronizar Capacitor
-- `stack.recommend`: Recomienda el stack completo (React + Capacitor + Tailwind + Konsta)
-- `cap.verify`: Verifica paquetes contra lista permitida
+- `ui_konsta`: Genera snippets de Konsta UI para React
+- `ui_tailwind`: Proporciona instrucciones de instalación de Tailwind
+- `cap_plugins`: Lista plugins de Capacitor según features solicitadas
+- `cap_install`: Genera comandos para instalar y sincronizar Capacitor
+- `stack_recommend`: Recomienda el stack completo (React + Capacitor + Tailwind + Konsta)
+- `cap_verify`: Verifica paquetes contra lista permitida
 
+## TEST PRODUCTION
+Para probar el servidor MCP en modo producción, sigue estos pasos:
+1. Compila el proyecto: `npm run build`
+2. Inicia el servidor en modo producción: `npm run start:prod` 
+3. Asegúrate de que el servidor está corriendo en `http://localhost:3000/mcp`
+
+## MCP Server
+Puedes usar herramientas como Postman o curl para enviar solicitudes POST al endpoint MCP.
+
+Usa el servidor MCP publicado para integrarlo con tus herramientas de IA favoritas.
+```bash
+https://mcp.nexa-code.net/mcp
+```
 ## Run tests
 
-```bash
+
 # unit tests
 $ npm run test
 
