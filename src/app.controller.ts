@@ -2,14 +2,13 @@ import { Body, Controller, Get, Post } from '@nestjs/common';
 import { AppService } from './app.service';
 import { ToolsCallBodyDTO } from './dto/toolsCallBody.dto';
 import { JsonRpcReqDTO } from './dto/jsonRpcReq.dto';
-import { version } from '../package.json';
 @Controller()
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @Get('health')
   health() {
-    return { status: 'ok', version };
+    return { status: 'ok', version: '1.0.0' };
   }
 
   @Get('tools/list')
