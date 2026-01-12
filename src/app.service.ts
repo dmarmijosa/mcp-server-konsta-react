@@ -65,12 +65,12 @@ export class AppService {
     const args = body?.arguments ?? {};
 
     const handlers: Record<string, () => ToolResponse> = {
-      'ui.konsta': () => handleKonsta(args),
-      'ui.tailwind': () => handleTailwind(),
-      'cap.plugins': () => handlePlugins(args),
-      'cap.install': () => handleInstall(args),
-      'stack.recommend': () => handleRecommend(args),
-      'cap.verify': () => handleVerify(args),
+      ui_konsta: () => handleKonsta(args),
+      ui_tailwind: () => handleTailwind(),
+      cap_plugins: () => handlePlugins(args),
+      cap_install: () => handleInstall(args),
+      stack_recommend: () => handleRecommend(args),
+      cap_verify: () => handleVerify(args),
     };
 
     const handler = handlers[name];

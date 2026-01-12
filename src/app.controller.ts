@@ -17,7 +17,7 @@ export class AppController {
 
   @Get('health')
   health() {
-    return { status: 'ok', version: '1.0.2' };
+    return { status: 'ok', version: '1.0.3' };
   }
 
   @Get('tools/list')
