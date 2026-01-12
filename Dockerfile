@@ -13,9 +13,6 @@ COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/package*.json ./
 
-# --- LÍNEA NUEVA Y CRUCIAL ---
-# Copiamos la carpeta public desde el builder a la imagen final
-COPY --from=builder /app/public ./public
 # -----------------------------
 EXPOSE 3000
 CMD ["node", "dist/main"]
