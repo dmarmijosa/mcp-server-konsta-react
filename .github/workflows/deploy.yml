@@ -1,0 +1,68 @@
+name: Despliegue MCP - Producción
+
+on:
+  push:
+    branches: ['main']
+
+jobs:
+  deploy:
+    # Usamos las etiquetas de tu nuevo runner
+    runs-on: [self-hosted, produccion]
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v3
+
+      # 1. LOGIN (Evitamos plugins externos para máxima estabilidad)
+      - name: Login en GHCR
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      # 2. BUILD (Calculamos el nombre usando Bash nativo)
+      - name: Build y Push Docker
+        run: |
+          # ${GITHUB_REPOSITORY,,} convierte el nombre a minúsculas
+          FULL_IMAGE_NAME="ghcr.io/${GITHUB_REPOSITORY,,}"
+
+          echo "Construyendo imagen: $FULL_IMAGE_NAME"
+          docker build . --file Dockerfile --tag $FULL_IMAGE_NAME:latest
+          docker push $FULL_IMAGE_NAME:latest
+
+      # 3. DESPLIEGUE (Inyección segura de variables)
+      - name: Desplegar en Servidor
+        env:
+          ENV_FILE_CONTENT: ${{ secrets.ENV_PRODUCCION }}
+        run: |
+          # --- CONFIGURACIÓN ---
+          APP_DIR="mcp-nestjs"
+          # Aquí definimos que vaya a la carpeta de la NUEVA organización
+          TARGET_DIR="$HOME/apps-nexa-net/$APP_DIR"
+
+          # Calculamos el nombre de la imagen otra vez
+          FULL_IMAGE_NAME="ghcr.io/${GITHUB_REPOSITORY,,}"
+
+          # Creamos la carpeta si no existe
+          mkdir -p $TARGET_DIR
+
+          # --- GENERACIÓN DEL ARCHIVO .ENV ---
+          # 1. Escribimos los secretos que vienen de GitHub
+          echo "$ENV_FILE_CONTENT" > $TARGET_DIR/.env
+          echo "" >> $TARGET_DIR/.env
+
+          # 2. Inyectamos la variable DEPLOY_IMAGE para que el docker-compose la lea
+          echo "DEPLOY_IMAGE=$FULL_IMAGE_NAME" >> $TARGET_DIR/.env
+
+          # --- EJECUCIÓN ---
+          # Copiamos el orquestador
+          cp docker-compose.yml $TARGET_DIR/
+
+          cd $TARGET_DIR
+
+          # Descargamos y levantamos
+          docker compose pull
+          docker compose up -d --remove-orphans
+
+          # Limpiamos basura
+          docker image prune -f
