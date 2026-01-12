@@ -46,14 +46,6 @@ jobs:
           # Creamos la carpeta si no existe
           mkdir -p $TARGET_DIR
 
-          # --- GENERACIÓN DEL ARCHIVO .ENV ---
-          # 1. Escribimos los secretos que vienen de GitHub
-          echo "$ENV_FILE_CONTENT" > $TARGET_DIR/.env
-          echo "" >> $TARGET_DIR/.env
-
-          # 2. Inyectamos la variable DEPLOY_IMAGE para que el docker-compose la lea
-          echo "DEPLOY_IMAGE=$FULL_IMAGE_NAME" >> $TARGET_DIR/.env
-
           # --- EJECUCIÓN ---
           # Copiamos el orquestador
           cp docker-compose.yml $TARGET_DIR/
