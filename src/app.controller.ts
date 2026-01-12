@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
 import { AppService } from './app.service';
-import type { ToolsCallBody } from './models/tools.model';
+import type { JsonRpcReq, ToolsCallBody } from './models/tools.model';
 
 @Controller()
 export class AppController {
@@ -275,5 +275,49 @@ Workflow:
     }
 
     return { content: [{ type: 'text', text: `Tool no encontrada: ${name}` }] };
+  }
+
+  @Post('mcp')
+  async mcp(@Body() req: JsonRpcReq) {
+    try {
+      // Handshake inicial que VS Code suele mandar
+      if (req.method === 'initialize') {
+        return {
+          jsonrpc: '2.0',
+          id: req.id ?? null,
+          result: {
+            protocolVersion: '2025-06-18',
+            serverInfo: { name: 'nexa-mcp', version: '1.0.0' },
+            capabilities: { tools: {} },
+          },
+        };
+      }
+
+      // Listado estándar MCP
+      if (req.method === 'tools/list') {
+        const result = this.listTools(); // reutiliza tu método existente
+        return { jsonrpc: '2.0', id: req.id ?? null, result };
+      }
+
+      // Ejecución estándar MCP
+      if (req.method === 'tools/call') {
+        // MCP manda params como { name, arguments }
+        const body: ToolsCallBody = req.params;
+        const result = this.callTool(body); // reutiliza tu método existente
+        return { jsonrpc: '2.0', id: req.id ?? null, result };
+      }
+
+      return {
+        jsonrpc: '2.0',
+        id: req.id ?? null,
+        error: { code: -32601, message: `Method not found: ${req.method}` },
+      };
+    } catch (e: any) {
+      return {
+        jsonrpc: '2.0',
+        id: req.id ?? null,
+        error: { code: -32603, message: 'Internal error', data: e?.message },
+      };
+    }
   }
 }
