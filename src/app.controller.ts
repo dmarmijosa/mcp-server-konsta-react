@@ -1,7 +1,15 @@
-import { Body, Controller, Get, Post, Res } from '@nestjs/common';
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Res,
+  UsePipes,
+  ValidationPipe,
+} from '@nestjs/common';
 import { AppService } from './app.service';
 import { ToolsCallBodyDTO } from './dto/toolsCallBody.dto';
-import { JsonRpcReqDTO } from './dto/jsonRpcReq.dto';
 import type { Response } from 'express';
 @Controller()
 export class AppController {
@@ -9,7 +17,7 @@ export class AppController {
 
   @Get('health')
   health() {
-    return { status: 'ok', version: '1.0.0' };
+    return { status: 'ok', version: '1.0.2' };
   }
 
   @Get('tools/list')
@@ -23,7 +31,14 @@ export class AppController {
   }
 
   @Post('mcp')
-  mcp(@Body() req: JsonRpcReqDTO) {
+  @UsePipes(
+    new ValidationPipe({
+      whitelist: false,
+      forbidNonWhitelisted: false,
+      transform: false,
+    }),
+  )
+  mcp(@Body() req: any) {
     return this.appService.mcpTools(req);
   }
 
