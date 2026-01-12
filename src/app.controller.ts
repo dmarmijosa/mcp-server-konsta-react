@@ -1,7 +1,8 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, Res } from '@nestjs/common';
 import { AppService } from './app.service';
 import { ToolsCallBodyDTO } from './dto/toolsCallBody.dto';
 import { JsonRpcReqDTO } from './dto/jsonRpcReq.dto';
+import type { Response } from 'express';
 @Controller()
 export class AppController {
   constructor(private readonly appService: AppService) {}
@@ -24,5 +25,16 @@ export class AppController {
   @Post('mcp')
   mcp(@Body() req: JsonRpcReqDTO) {
     return this.appService.mcpTools(req);
+  }
+
+  @Get('mcp')
+  mcpSse(@Res() res: Response) {
+    res.setHeader('Content-Type', 'text/event-stream');
+    res.setHeader('Cache-Control', 'no-cache');
+    res.setHeader('Connection', 'keep-alive');
+    res.write(`: connected\n\n`);
+
+    const t = setInterval(() => res.write(`: keep-alive\n\n`), 25000);
+    res.on('close', () => clearInterval(t));
   }
 }

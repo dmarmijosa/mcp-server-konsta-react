@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
 import { IsOptional, IsString, IsArray, ValidateNested } from 'class-validator';
 import { Type } from 'class-transformer';
 

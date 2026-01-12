@@ -1,12 +1,5 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-import { Type } from 'class-transformer';
-import {
-  IsNumber,
-  IsOptional,
-  IsString,
-  ValidateNested,
-} from 'class-validator';
-import { ToolsCallBodyDTO } from './toolsCallBody.dto';
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+import { IsNumber, IsOptional, IsString, ValidateIf } from 'class-validator';
 
 export class JsonRpcReqDTO {
   jsonrpc: string;
@@ -14,13 +7,15 @@ export class JsonRpcReqDTO {
   @IsString()
   method: string;
 
-  @ValidateNested()
-  @Type(() => ToolsCallBodyDTO)
+  //   @ValidateNested()
+  //   @Type(() => ToolsCallBodyDTO)
   @IsOptional()
-  params?: ToolsCallBodyDTO;
+  params?: any;
 
-  @IsString()
   @IsOptional()
+  @ValidateIf((o) => typeof o.id === 'string')
+  @IsString()
+  @ValidateIf((o) => typeof o.id === 'number')
   @IsNumber()
-  id?: string | number;
+  id?: string | number | null;
 }
