@@ -1,6 +1,6 @@
 export const toolsMCP = [
   {
-    name: 'stack.recommend',
+    name: 'stack_recommend',
     description:
       'Recomienda stack React + Capacitor + Tailwind + Konsta + plugins sugeridos',
     inputSchema: {
@@ -25,7 +25,7 @@ export const toolsMCP = [
     },
   },
   {
-    name: 'cap.plugins',
+    name: 'cap_plugins',
     description: 'Lista plugins oficiales y community recomendados por feature',
     inputSchema: {
       type: 'object',
@@ -36,7 +36,7 @@ export const toolsMCP = [
     },
   },
   {
-    name: 'cap.install',
+    name: 'cap_install',
     description: 'Genera comandos npm para instalar plugins y hacer sync',
     inputSchema: {
       type: 'object',
@@ -47,12 +47,12 @@ export const toolsMCP = [
     },
   },
   {
-    name: 'ui.tailwind',
+    name: 'ui_tailwind',
     description: 'Devuelve configuración/snippet para Tailwind en React (Vite)',
     inputSchema: { type: 'object', properties: {} },
   },
   {
-    name: 'ui.konsta',
+    name: 'ui_konsta',
     description: 'Devuelve snippet Konsta UI + Tailwind, ideal para Capacitor',
     inputSchema: {
       type: 'object',
@@ -66,7 +66,7 @@ export const toolsMCP = [
     },
   },
   {
-    name: 'cap.verify',
+    name: 'cap_verify',
     description:
       'Valida si una lista de paquetes entra en la política “verificados”',
     inputSchema: {
