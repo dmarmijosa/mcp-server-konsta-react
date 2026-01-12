@@ -78,16 +78,6 @@ $ npm run start:prod
 
 4. Inicia el servidor MCP: `npm run start:dev`
 
-### Google Gemini
-
-1. Accede a [Google AI Studio](https://aistudio.google.com)
-2. En las opciones de configuración, busca "Conexiones MCP"
-3. Agrega una nueva conexión:
-   - **URL**: `http://localhost:3000/mcp`
-   - **Nombre**: `capacitor-stack`
-   - **Autenticación**: No requerida
-
-4. Ejecuta el servidor: `npm run start:dev`
 
 **Nota**: Todas las herramientas utilizan la URL directamente sin necesidad de tokens de autenticación.
 
